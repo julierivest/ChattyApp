@@ -22,6 +22,11 @@ npm install
 npm start
 open http://localhost:3000
 ```
+### Screenshots
+
+!["Screenshot of welcome screen"](https://github.com/julierivest/ChattyApp/blob/master/screenshot/ChattyHome.png)
+!["Screenshot of ChattyApp conversation"](https://github.com/julierivest/ChattyApp/blob/master/screenshot/ChattyConvo.png)
+
 
 ### Static Files
 
