@@ -65,7 +65,7 @@ body {
 }
 
 .navbar {
-  background: tomato;
+   background: tomato;
   border-bottom: 1px solid black;
   height: 60px;
   left: 0;
@@ -85,5 +85,11 @@ body {
   line-height: 60px;
   padding: 0 10px;
   text-decoration: none;
+}
+
+.clients-count {
+  display: block;
+  color: black;
+  float: right;
 }
 

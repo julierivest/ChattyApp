@@ -8,20 +8,15 @@ class MessageList extends Component {
     return (
       <main className="messages">
         {messages.map((message) => {
-
           if (message.type === "incomingMsg") {
-            return <Message key={message.id} username={message.username} content={message.content} />
+            return <Message key={message.id} username={message.username} content={message.content} color={message.color} />
           }
           else if (message.type === "incomingNotif") {
             return <MsgSystem key={message.id} content={message.content} />
           }
         })}
-
-
-
       </main>
       )
-
   }
 }
 

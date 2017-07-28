@@ -1,4 +1,3 @@
-// server.js
 const WebSocket = require('ws');
 const express = require('express');
 const SocketServer = require('ws').Server;
@@ -6,13 +5,11 @@ const SocketServer = require('ws').Server;
 const uuid = require('node-uuid');
 // Set the port to 3001
 const PORT = 3001;
-
 // Create a new express server
 const server = express()
    // Make the express server serve static assets (html, javascript, css) from the /public folder
   .use(express.static('public'))
   .listen(PORT, '0.0.0.0', 'localhost', () => console.log(`Listening on ${ PORT }`));
-
 // Create the WebSockets server
 const wss = new SocketServer({ server });
 
@@ -24,26 +21,33 @@ function broadcastToClients(data) {
   })
 }
 
+function assignUserColor() {
+  const colorsArr = ["#136bf7", "#b213f7", "#f71313", "#00b51e"];
+  const color = colorsArr[Math.floor(Math.random()*colorsArr.length)];
+  return color;
+}
+
 // Set up a callback that will run when a client connects to the server
 // When a client connects they are assigned a socket, represented by
 // the ws parameter in the callback.
 wss.on('connection', (ws) => {
-  console.log('Client connected');
-  console.log(wss.clients.size);
   let clientsSize = {
     type: "incomingClients",
     size: wss.clients.size
   }
   broadcastToClients(clientsSize);
+  //assign color
+  //send color to client
+  //give msg type: colorMsg
+  let userColorMsg = {
+    type: "colorMsg",
+    color: assignUserColor()
+  }
+  ws.send(JSON.stringify(userColorMsg));
 
   ws.on('message', function(msg) {
-    console.log("received message" + msg);
-
     msg = JSON.parse(msg);
-console.log("msg type server " + msg.type);
-
     switch (msg.type) {
-
       case "postMessage":
         msg["id"] = uuid.v4();
         msg["type"] = "incomingMsg"
@@ -54,8 +58,6 @@ console.log("msg type server " + msg.type);
         console.log("before modif" + msg);
         msg["id"] = uuid.v4();
         msg["type"] = "incomingNotif";
-        console.log("after" + JSON.stringify(msg));
-
         broadcastToClients(msg);
         break;
       default:
@@ -72,6 +74,5 @@ console.log("msg type server " + msg.type);
   }
   broadcastToClients(clientsSize);
   });
-
 });
 
